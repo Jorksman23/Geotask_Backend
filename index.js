@@ -34,13 +34,13 @@ app.use(cors({
 const main = async () => {
     try {
         await sequelize.authenticate();
-        console.log('Base de datos conectada.');
+        console.log('✅ Conexión a la base de datos establecida correctamente.');
         await sequelize.sync({ alter: false })
         app.listen(_PORT, () => {
-            console.log(`Servidor corriendo en el puerto => ${_PORT}`);
+        console.log(`🚀 Servidor Express ejecutando en http://localhost:${PORT}`);
         });
     } catch (error) {
-        console.log(`Error ${error}`);
+        console.error('❌ Error conectando a la base de datos:', error);
     }
 }
 main();
