@@ -8,8 +8,11 @@ import AuthRouter from './router/AuthRouter.js';
 
 import "./models/LocationModel.js";
 import "./models/CategoryModel.js";
+import "./models/TaskModel.js";
+
 import { RouterCategory } from './router/CategoryRoutes.js';
 import { RouterLocation } from './router/LocationRouter.js';
+import { RouterTask } from './router/TaskRouter.js';
 
 const _PORT = PORT || 3000;
 const app = express();
@@ -21,6 +24,7 @@ app.use('/api/auth',AuthRouter);
 app.use('/api', RouterUsuer);
 app.use('/api',RouterLocation);
 app.use('/api',RouterCategory);
+app.use('/api',RouterTask);
 
 app.use(cors({
     origin: 'http://localhost:8100', // o la URL de tu frontend
