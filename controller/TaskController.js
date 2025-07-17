@@ -39,3 +39,27 @@ export const deleteTask = async (req, res) => {
     ? res.json({ message: "Tarea eliminada" })
     : res.status(404).json({ message: "No encontrada" });
 };
+
+export const completeTask = async (req, res) => {
+  const { id } = req.params; // Obtener el id de la tarea desde la URL
+
+  try {
+    // Buscar la tarea por id
+    const task = await TaskModel.findByPk(id);
+
+    if (!task) {
+      return res.status(404).json({ message: 'Tarea no encontrada' });
+    }
+
+    // Cambiar el estado de la tarea a "finalizado"
+    task.status = 'finalizado';
+
+    // Guardar la tarea actualizada
+    await task.save();
+
+    return res.json({ message: 'Tarea completada', task });
+  } catch (error) {
+    console.error('Error al completar la tarea:', error);
+    return res.status(500).json({ message: 'Error interno del servidor', error: error.message });
+  }
+};
