@@ -3,12 +3,6 @@ import { UserModel } from "../models/UserModel.js";
 import { CategoryModel } from "../models/CategoryModel.js";
 import { LocationModel } from "../models/LocationModel.js";
 
-export const getTasks = async (req, res) => {
-  const tasks = await TaskModel.findAll({
-    include: [UserModel, CategoryModel, LocationModel],
-  });
-  res.json(tasks);
-};
 
 export const getTaskById = async (req, res) => {
   const task = await TaskModel.findByPk(req.params.id, {
@@ -23,6 +17,23 @@ export const createTask = async (req, res) => {
   const { title, description, date, status, priority, user_id, category_id, location_id } = req.body;
   const task = await TaskModel.create({ title, description, date, status, priority, user_id, category_id, location_id });
   res.status(201).json(task);
+};
+
+//Listar tareas del Usuario
+export const getTasks = async (req, res) => {
+  try {
+    const userId = req.user.user_id; // ID del usuario autenticado (lo coloca verifyToken)
+
+    const tasks = await TaskModel.findAll({
+      where: { user_id: userId },
+      include: [CategoryModel, LocationModel] // si deseas incluir más info
+    });
+
+    res.status(200).json(tasks);
+  } catch (error) {
+    console.error('Error al obtener las tareas:', error);
+    res.status(500).json({ message: 'Error al obtener las tareas', error: error.message });
+  }
 };
 
 export const updateTask = async (req, res) => {
