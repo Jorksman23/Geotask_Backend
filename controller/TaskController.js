@@ -1,12 +1,12 @@
 import { TaskModel } from "../models/TaskModel.js";
 import { UserModel } from "../models/UserModel.js";
-import { CategoryModel } from "../models/CategoryModel.js";
 import { LocationModel } from "../models/LocationModel.js";
+
 
 
 export const getTaskById = async (req, res) => {
   const task = await TaskModel.findByPk(req.params.id, {
-    include: [UserModel, CategoryModel, LocationModel],
+    include: [UserModel, LocationModel],
   });
   task
     ? res.json(task)
@@ -14,8 +14,8 @@ export const getTaskById = async (req, res) => {
 };
 
 export const createTask = async (req, res) => {
-  const { title, description, date, status, priority, user_id, category_id, location_id } = req.body;
-  const task = await TaskModel.create({ title, description, date, status, priority, user_id, category_id, location_id });
+  const { title, description, date, status, priority, category , user_id, location_id } = req.body;
+  const task = await TaskModel.create({ title, description, date, status, priority, category , user_id, location_id });
   res.status(201).json(task);
 };
 
@@ -26,7 +26,7 @@ export const getTasks = async (req, res) => {
 
     const tasks = await TaskModel.findAll({
       where: { user_id: userId },
-      include: [CategoryModel, LocationModel] // si deseas incluir más info
+      include: [LocationModel] // si deseas incluir más info
     });
 
     res.status(200).json(tasks);

@@ -1,7 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db/conexion.js";
 import { UserModel } from "./UserModel.js";
-import { CategoryModel } from "./CategoryModel.js"; 
 import { LocationModel } from "./LocationModel.js";
 
 export const TaskModel = sequelize.define("tasks", {
@@ -22,14 +21,6 @@ export const TaskModel = sequelize.define("tasks", {
     type: DataTypes.DATEONLY,
     allowNull: false,
   },
-  // status: {
-  //   type: DataTypes.ENUM("pendiente", "en curso", "finalizado"),
-  //   defaultValue: "pendiente",
-  // },
-  // priority: {
-  //   type: DataTypes.ENUM("baja", "media", "alta"),
-  //   defaultValue: "media",
-  // },
   status: {
     type: DataTypes.ENUM("pending", "in-progress", "completed"),
     defaultValue: "pending",
@@ -38,13 +29,13 @@ export const TaskModel = sequelize.define("tasks", {
     type: DataTypes.ENUM("low", "medium", "high"),
     defaultValue: "medium",
   },
+  category: {
+      type: DataTypes.ENUM("Work", "Personal", "Study", "Urgent", "Health", "other"),
+      allowNull: false,
+    },
   user_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-  },
-  category_id: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
   },
   location_id: {
     type: DataTypes.INTEGER,
@@ -57,9 +48,6 @@ export const TaskModel = sequelize.define("tasks", {
 // Relaciones
 UserModel.hasMany(TaskModel, { foreignKey: "user_id" });
 TaskModel.belongsTo(UserModel, { foreignKey: "user_id" });
-
-CategoryModel.hasMany(TaskModel, { foreignKey: "category_id" });
-TaskModel.belongsTo(CategoryModel, { foreignKey: "category_id" });
 
 LocationModel.hasMany(TaskModel, { foreignKey: "location_id" });
 TaskModel.belongsTo(LocationModel, { foreignKey: "location_id" });

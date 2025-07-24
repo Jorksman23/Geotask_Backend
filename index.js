@@ -9,10 +9,8 @@ import AuthRouter from './router/AuthRouter.js';
 import { getNearbyTasks } from './controller/TaskController.js';
 
 import "./models/LocationModel.js";
-import "./models/CategoryModel.js";
 import "./models/TaskModel.js";
 
-import { RouterCategory } from './router/CategoryRoutes.js';
 import { RouterLocation } from './router/LocationRouter.js';
 import { RouterTask } from './router/TaskRouter.js';
 
@@ -25,7 +23,6 @@ app.use('/api/auth',AuthRouter);
 
 app.use('/api', RouterUsuer);
 app.use('/api',RouterLocation);
-app.use('/api',RouterCategory);
 app.use('/api',RouterTask);
 app.get('/api/tasks/nearby', getNearbyTasks); // pública
 
