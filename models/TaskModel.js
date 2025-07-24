@@ -22,14 +22,22 @@ export const TaskModel = sequelize.define("tasks", {
     type: DataTypes.DATEONLY,
     allowNull: false,
   },
+  // status: {
+  //   type: DataTypes.ENUM("pendiente", "en curso", "finalizado"),
+  //   defaultValue: "pendiente",
+  // },
+  // priority: {
+  //   type: DataTypes.ENUM("baja", "media", "alta"),
+  //   defaultValue: "media",
+  // },
   status: {
-    type: DataTypes.ENUM("pendiente", "en curso", "finalizado"),
-    defaultValue: "pendiente",
+    type: DataTypes.ENUM("pending", "in-progress", "completed"),
+    defaultValue: "pending",
   },
   priority: {
-    type: DataTypes.ENUM("baja", "media", "alta"),
-    defaultValue: "media",
-  },
+    type: DataTypes.ENUM("low", "medium", "high"),
+    defaultValue: "medium",
+  },
   user_id: {
     type: DataTypes.INTEGER,
     allowNull: false,

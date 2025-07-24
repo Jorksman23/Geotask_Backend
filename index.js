@@ -6,6 +6,8 @@ import  { RouterUsuer } from './router/UserRouter.js';
 import { sequelize } from "./db/conexion.js";
 import AuthRouter from './router/AuthRouter.js';
 
+import { getNearbyTasks } from './controller/TaskController.js';
+
 import "./models/LocationModel.js";
 import "./models/CategoryModel.js";
 import "./models/TaskModel.js";
@@ -25,6 +27,7 @@ app.use('/api', RouterUsuer);
 app.use('/api',RouterLocation);
 app.use('/api',RouterCategory);
 app.use('/api',RouterTask);
+app.get('/api/tasks/nearby', getNearbyTasks); // pública
 
 app.use(cors({
     origin: 'http://localhost:8100', // o la URL de tu frontend

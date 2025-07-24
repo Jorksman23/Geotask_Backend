@@ -74,3 +74,63 @@ export const completeTask = async (req, res) => {
     return res.status(500).json({ message: 'Error interno del servidor', error: error.message });
   }
 };
+
+//Tareas cercanas por coordenadas
+export const getNearbyTasks = async (req, res) => {
+  const { lat, lng } = req.query;
+  if (!lat && !lng) {
+    return res.status(400).json({ message: "Coordenadas faltantes" });
+  }
+  const latitude = parseFloat(lat);
+  const longitude = parseFloat(lng);
+  try {
+    // Buscar todas las ubicaciones registradas
+    const locations = await LocationModel.findAll();
+    // Calcular distancia simple en metros y filtrar las cercanas
+    const nearbyLocationIds = locations
+      .filter(loc => {
+        const distance = calcularDistancia(
+          latitude,
+          longitude,
+          parseFloat(loc.latitude),
+          parseFloat(loc.longitude)
+        );
+        return distance <= loc.geofence_radius; // radio de geocerca de esa ubicación
+      })
+      .map(loc => loc.id);
+
+    if (nearbyLocationIds.length === 0) {
+      return res.json([]); // No hay tareas cercanas
+    }
+    // Buscar tareas asociadas a esas ubicaciones
+    const tasks = await TaskModel.findAll({
+      where: {
+        location_id: { [Op.in]: nearbyLocationIds }
+      },
+      include: [LocationModel, CategoryModel]
+    });
+
+    res.json(tasks);
+  } catch (error) {
+    console.error("Error en getNearbyTasks:", error);
+    res.status(500).json({ message: "Error interno del servidor", error: error.message });
+  }
+};
+
+// Función auxiliar: Haversine (aproximación)
+function calcularDistancia(lat1, lon1, lat2, lon2) {
+  const R = 6371e3; // Radio de la Tierra en metros
+  const φ1 = (lat1 * Math.PI) / 180;
+  const φ2 = (lat2 * Math.PI) / 180;
+  const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+  const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+
+  const a =
+    Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) *
+    Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return R * c; // distancia en metros
+}
