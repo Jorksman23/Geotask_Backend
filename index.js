@@ -1,11 +1,10 @@
-
 import express from 'express';
 import cors from "cors";
 import { PORT } from './config/config.js';
 import  { RouterUsuer } from './router/UserRouter.js';
 import { sequelize } from "./db/conexion.js";
 import AuthRouter from './router/AuthRouter.js';
-
+import { swaggerDocs } from './Swagger/swagger.js';
 import { getNearbyTasks } from './controller/TaskController.js';
 
 import "./models/LocationModel.js";
@@ -31,6 +30,7 @@ app.use(cors({
   credentials: true
 }));
 
+swaggerDocs(app);
 const main = async () => {
     try {
         await sequelize.authenticate();

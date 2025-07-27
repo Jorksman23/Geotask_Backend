@@ -24,6 +24,7 @@ export const createLocation = async (req, res) => {
   }
 };
 
+
 export const updateLocation = async (req, res) => {
   try {
     const location = await LocationModel.findByPk(req.params.id);
@@ -35,6 +36,7 @@ export const updateLocation = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 export const deleteLocation = async (req, res) => {
   try {
