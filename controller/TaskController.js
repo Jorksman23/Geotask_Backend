@@ -100,7 +100,7 @@ export const completeTask = async (req, res) => {
     }
 
     // Cambiar el estado de la tarea a "finalizado"
-    task.status = 'finalizado';
+    task.status = 'completed';
 
     // Guardar la tarea actualizada
     await task.save();
@@ -144,7 +144,7 @@ export const getNearbyTasks = async (req, res) => {
       where: {
         location_id: { [Op.in]: nearbyLocationIds }
       },
-      include: [LocationModel, CategoryModel]
+      include: [LocationModel]
     });
 
     res.json(tasks);
