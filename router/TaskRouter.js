@@ -12,6 +12,14 @@ import { verifyToken } from '../middleware/auth.js';
 
 const router = express.Router();
 
+router.post('/tasks', verifyToken, createTask);
+router.get('/tasks/:id', verifyToken, getTaskById);
+router.get('/tasks', verifyToken, getTasks);
+router.get('/tasks/nearby', getNearbyTasks);
+router.put('/tasks/:id', verifyToken, updateTask);
+router.put('/tasks/:id/complete', verifyToken, completeTask);
+router.delete('/tasks/:id', verifyToken, deleteTask);
+
 /**
  * @swagger
  * tags:
@@ -56,7 +64,6 @@ const router = express.Router();
  *       201:
  *         description: Tarea creada correctamente
  */
-router.post('/tasks', verifyToken, createTask);
 
 /**
  * @swagger
@@ -79,7 +86,6 @@ router.post('/tasks', verifyToken, createTask);
  *       404:
  *         description: Tarea no encontrada
  */
-router.get('/tasks/:id', verifyToken, getTaskById);
 
 /**
  * @swagger
@@ -121,7 +127,6 @@ router.get('/tasks/:id', verifyToken, getTaskById);
  *       500:
  *         description: Error al obtener las tareas
  */
-router.get('/tasks', verifyToken, getTasks);
 
 /**
  * @swagger
@@ -163,7 +168,6 @@ router.get('/tasks', verifyToken, getTasks);
  *       500:
  *         description: Error interno del servidor
  */
-router.get('/tasks/nearby', getNearbyTasks);
 
 /**
  * @swagger
@@ -209,7 +213,6 @@ router.get('/tasks/nearby', getNearbyTasks);
  *       404:
  *         description: Tarea no encontrada
  */
-router.put('/tasks/:id', verifyToken, updateTask);
 
 /**
  * @swagger
@@ -242,8 +245,6 @@ router.put('/tasks/:id', verifyToken, updateTask);
  *       404:
  *         description: Tarea no encontrada
  */
-router.put('/tasks/:id/complete', verifyToken, completeTask);
-
 
 /**
  * @swagger
@@ -282,6 +283,5 @@ router.put('/tasks/:id/complete', verifyToken, completeTask);
  *                   type: string
  *                   example: No encontrada
  */
-router.delete('/tasks/:id', verifyToken, deleteTask);
 
 export const RouterTask = router;

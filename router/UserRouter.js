@@ -1,8 +1,6 @@
 import express from 'express';
 import { 
   login, 
-  updateUsersPassword, 
-  updateUsersEmail, 
   getUsers, 
   updateUsers, 
   getOneUser 
@@ -11,13 +9,19 @@ import { verifyToken } from '../middleware/auth.js';
 import { 
   validateRegister, 
   validateLogin, 
-  validateUpdateUser, 
-  validateUpdateEmail, 
-  validateUpdatePassword 
+  validateUpdateUser
 } from '../middleware/validatorMiddleware.js';
 import { registerUser } from '../controller/AuthController.js';
 
 const router = express.Router();
+
+
+
+router.post('/register', validateRegister, registerUser);
+router.post('/login', validateLogin, login);
+router.get('/user', verifyToken, getUsers);
+router.get('/user/:id', verifyToken, getOneUser);
+router.put('/user/:id', verifyToken, validateUpdateUser, updateUsers);
 
 /**
  * @swagger
@@ -54,7 +58,6 @@ const router = express.Router();
  *         description: Error de validación
  */
 
-router.post('/register', validateRegister, registerUser);
 
 /**
  * @swagger
@@ -81,7 +84,7 @@ router.post('/register', validateRegister, registerUser);
  *       401:
  *         description: Credenciales inválidas
  */
-router.post('/login', validateLogin, login);
+
 
 /**
  * @swagger
@@ -113,7 +116,7 @@ router.post('/login', validateLogin, login);
  *                       numero:
  *                         type: string
  */
-router.get('/user', verifyToken, getUsers);
+
 
 /**
  * @swagger
@@ -152,7 +155,6 @@ router.get('/user', verifyToken, getUsers);
  *       404:
  *         description: Usuario no encontrado
  */
-router.get('/user/:id', verifyToken, getOneUser);
 
 
 /**
@@ -187,80 +189,5 @@ router.get('/user/:id', verifyToken, getOneUser);
  *       404:
  *         description: Usuario no encontrado
  */
-router.put('/user/:id', verifyToken, validateUpdateUser, updateUsers);
-
-
-/**
- * @swagger
- * /user/email/{id}:
- *   put:
- *     summary: Actualizar email de un usuario
- *     tags: [Usuarios]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         schema:
- *           type: integer
- *         description: ID del usuario a actualizar
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *     responses:
- *       200:
- *         description: Email actualizado correctamente
- *       400:
- *         description: El campo email es obligatorio
- *       404:
- *         description: Usuario no encontrado
- *       409:
- *         description: El email ya está en uso por otro usuario
- */
-
-router.put('/user/email/:id', verifyToken, validateUpdateEmail, updateUsersEmail);
-
-/**
- * @swagger
- * /user/password/{id}:
- *   put:
- *     summary: Actualizar contraseña de un usuario
- *     tags: [Usuarios]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         schema:
- *           type: integer
- *         description: ID del usuario a actualizar
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               password:
- *                 type: string
- *                 minLength: 6
- *     responses:
- *       200:
- *         description: Contraseña actualizada correctamente
- *       400:
- *         description: La contraseña es obligatoria o demasiado corta
- *       404:
- *         description: Usuario no encontrado
- */
-
-router.put('/user/password/:id', verifyToken, validateUpdatePassword, updateUsersPassword);
 
 export const RouterUsuer = router;

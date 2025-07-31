@@ -8,6 +8,11 @@ import {
 
 const router = express.Router();
 
+router.post('/locations', createLocation);
+router.get('/locations', getLocations);
+router.put('/locations/:id', updateLocation);
+router.delete('/locations/:id', deleteLocation);
+
 /**
  * @swagger
  * tags:
@@ -44,7 +49,6 @@ const router = express.Router();
  *       201:
  *         description: Ubicación creada correctamente
  */
-router.post('/locations', createLocation);
 
 /**
  * @swagger
@@ -73,7 +77,6 @@ router.post('/locations', createLocation);
  *                   geofence_radius:
  *                     type: number
  */
-router.get('/locations', getLocations);
 
 /**
  * @swagger
@@ -108,7 +111,6 @@ router.get('/locations', getLocations);
  *       200:
  *         description: Ubicación actualizada correctamente
  */
-router.put('/locations/:id', updateLocation);
 
 /**
  * @swagger
@@ -131,6 +133,5 @@ router.put('/locations/:id', updateLocation);
  *       500:
  *         description: Error interno del servidor
  */
-router.delete('/locations/:id', deleteLocation);
 
 export const RouterLocation = router;

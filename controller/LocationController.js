@@ -48,3 +48,13 @@ export const deleteLocation = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const getLocationById = async (req, res) => {
+  try {
+    const location = await LocationModel.findByPk(req.params.id);
+    if (!location) return res.status(404).json({ message: "Location not found" });
+    res.json(location);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
