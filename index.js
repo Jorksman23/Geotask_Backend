@@ -26,7 +26,7 @@ app.use('/api',RouterTask);
 app.get('/api/tasks/nearby', getNearbyTasks); // pública
 
 app.use(cors({
-    origin: 'http://localhost:8100', // o la URL de tu frontend
+    origin: ['http://localhost:8100','https://geottask-frontend.web.app'], // o la URL de tu frontend
   credentials: true
 }));
 
