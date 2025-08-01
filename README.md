@@ -33,6 +33,7 @@ npm start inicia en modo producción
 
 
 ## Arquitectura del Sistema
+```mermaid
 graph TD
     A[App Móvil - Ionic Angular] -->|API REST| B(Backend Node.js Express)
     B --> C[(MySQL)]
@@ -40,8 +41,9 @@ graph TD
     A --> E[Geolocalización nativa (Capacitor)]
     A --> F[Mapbox GL JS]
 
-<pre> ```mermaid graph TD A[index.js (Servidor Principal)] --> B[Router] B --> B1[AuthRouter.js] B --> B2[UserRouter.js] B --> B3[TaskRouter.js] B --> B4[LocationRouter.js] A --> C[Middleware] C --> C1[authMiddleware] C --> C2[errorHandler] B1 --> D1[AuthController.js] B2 --> D2[UserController.js] B3 --> D3[TaskController.js] B4 --> D4[LocationController.js] D1 --> E1[UserModel.js] D2 --> E1 D3 --> E2[TaskModel.js] D4 --> E3[LocationModel.js] A --> F[Swagger Docs] A --> G[conexion.js (MongoDB)] G --> H[MongoDB Atlas] ``` </pre>
+ ```
 ## 🧩 Diagrama de Arquitectura del Backend
+
 graph TD
     A[index.js (Servidor Principal)] --> B[Router]
     B --> B1[AuthRouter.js]
