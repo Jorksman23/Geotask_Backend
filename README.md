@@ -30,3 +30,7 @@ TOKEN_KEY (Clave secreta para firmar tokens JWT)
 ## Script 
 npm run dev inicia el servidor con nodemon
 npm start inicia en modo producción
+
+
+
+<pre> ```mermaid graph TD A[App Móvil - Ionic Angular] -->|API REST| B(Backend Node.js Express) B --> C[(MongoDB Atlas)] B --> D[Google Maps API] ``` </pre>
