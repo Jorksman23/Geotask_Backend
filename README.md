@@ -1,4 +1,4 @@
-# GeoTask Manager - Backend
+<img width="1091" height="571" alt="image" src="https://github.com/user-attachments/assets/9ed95c49-074b-49db-844a-bd7d24069c46" /># GeoTask Manager - Backend
 API RESTful desarrollada con Node.js + Express, diseñada para gestionar tareas geolocalizadas,
 es decir está enfocada en la gestión inteligente de tareas basada en la geolocalización.
 ## Características Principales
@@ -69,3 +69,6 @@ graph TD
     A --> G[conexion.js (MySQL)]
 
     G --> H[Base de Datos MySQL]
+
+    <img width="1091" height="571" alt="image" src="https://github.com/user-attachments/assets/0ec7c589-6893-40ca-b155-3c3a08954936" />
+
